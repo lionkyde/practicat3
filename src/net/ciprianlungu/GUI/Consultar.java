@@ -12,12 +12,12 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
-public class Panel1 extends JPanel {
+public class Consultar extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public Panel1() {
+	public Consultar() {
 		setBackground(SystemColor.info);
 		setLayout(new BorderLayout(0, 0));
 		
@@ -25,15 +25,15 @@ public class Panel1 extends JPanel {
 		add(toolBar, BorderLayout.NORTH);
 		
 		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.setIcon(new ImageIcon(Panel1.class.getResource("/assets/CD.jpg")));
+		btnNewButton_1.setIcon(new ImageIcon(Consultar.class.getResource("/assets/CD.jpg")));
 		toolBar.add(btnNewButton_1);
 		
 		JButton btnNewButton_3 = new JButton("");
-		btnNewButton_3.setIcon(new ImageIcon(Panel1.class.getResource("/assets/Android Smartphone.jpg")));
+		btnNewButton_3.setIcon(new ImageIcon(Consultar.class.getResource("/assets/Android Smartphone.jpg")));
 		toolBar.add(btnNewButton_3);
 		
 		JButton btnNewButton_2 = new JButton("");
-		btnNewButton_2.setIcon(new ImageIcon(Panel1.class.getResource("/assets/Microphone 1.jpg")));
+		btnNewButton_2.setIcon(new ImageIcon(Consultar.class.getResource("/assets/Microphone 1.jpg")));
 		toolBar.add(btnNewButton_2);
 		
 		JPanel panel = new JPanel();

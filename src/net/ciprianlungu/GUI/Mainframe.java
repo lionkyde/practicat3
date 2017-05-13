@@ -24,7 +24,7 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.SystemColor;
 
-public class J23App extends JFrame {
+public class Mainframe extends JFrame {
 
 	private JPanel contentPane;
 	JMenuBar menuBar = new JMenuBar();
@@ -37,7 +37,7 @@ public class J23App extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					J23App frame = new J23App();
+					Mainframe frame = new Mainframe();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +49,7 @@ public class J23App extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public J23App() {
+	public Mainframe() {
 		setResizable(false);
 		setBackground(Color.GREEN);
 		getContentPane().setLayout(new CardLayout(0, 0));
@@ -119,7 +119,7 @@ public class J23App extends JFrame {
 		JMenuItem mntmAbout = new JMenuItem("Sobre..");
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(J23App.this,
+				JOptionPane.showMessageDialog(Mainframe.this,
 					    "Proyecto hecho por Ciprian George Lungu",
 					    "Mayo 2017",
 					    JOptionPane.INFORMATION_MESSAGE);
@@ -131,10 +131,10 @@ public class J23App extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
 		
-		Panel3 panel3 = new Panel3();
-		contentPane.add(panel3,"Principal");
-		contentPane.add(new Panel1(),"Consultar");
-		contentPane.add(new Panel2(),"Editar");
+		Autenticacion autenticacion = new Autenticacion();
+		contentPane.add(autenticacion,"Principal");
+		contentPane.add(new Consultar(),"Consultar");
+		contentPane.add(new Editar(),"Editar");
 	}
 	
 	public void setMenuBarVisible(){

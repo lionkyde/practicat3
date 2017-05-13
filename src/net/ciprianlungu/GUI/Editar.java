@@ -10,12 +10,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Panel2 extends JPanel {
+public class Editar extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public Panel2() {
+	public Editar() {
 		setBackground(SystemColor.inactiveCaption);
 		setLayout(null);
 		

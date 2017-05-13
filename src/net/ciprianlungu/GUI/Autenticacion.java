@@ -17,14 +17,14 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
-public class Panel3 extends JPanel {
+public class Autenticacion extends JPanel {
 	private JTextField tfUsuario;
 	private JPasswordField passwordField;
 
 	/**
 	 * Create the panel.
 	 */
-	public Panel3() {
+	public Autenticacion() {
 		setBackground(SystemColor.inactiveCaption);
 		setLayout(null);
 		
@@ -55,19 +55,23 @@ public class Panel3 extends JPanel {
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setMenuBarVisible();
-				String usuario = tfUsuario.getText();
-				String password = String.valueOf(passwordField.getPassword());
-				GestorBBDD gestor = new GestorBBDD(usuario,password,"localhost","bbdd_gestmotor");
 				try {
+					setMenuBarVisible();
+					String usuario = tfUsuario.getText();
+					String password = String.valueOf(passwordField.getPassword());
+					GestorBBDD gestor = new GestorBBDD(usuario,password,"localhost","bbdd_gestmotor");
 					gestor.establecerConexion();
 					gestor.cerrarConexion();
+					
+					
 				} catch (ClassNotFoundException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
+		
+		
 		//TAMANO DE BOTON
 		btnEntrar.setBounds(359, 281, 91, 23);
 		add(btnEntrar);
@@ -81,7 +85,7 @@ public class Panel3 extends JPanel {
 		
 	}
 	private void setMenuBarVisible(){
-		J23App topFrame = (J23App)SwingUtilities.getWindowAncestor(this);
+		Mainframe topFrame = (Mainframe)SwingUtilities.getWindowAncestor(this);
 		topFrame.setMenuBarVisible();
 	}
 }
