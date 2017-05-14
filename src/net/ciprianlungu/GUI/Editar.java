@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import java.awt.Font;
+import javax.swing.JTextField;
 
 public class Editar extends JPanel {
 
@@ -19,18 +22,14 @@ public class Editar extends JPanel {
 		setBackground(SystemColor.inactiveCaption);
 		setLayout(null);
 		
-		JLabel lblPanel = new JLabel("PANEL 2");
-		lblPanel.setBounds(205, 5, 40, 14);
-		add(lblPanel);
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(104, 63, 201, 20);
+		add(comboBox);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-					
-			}
-		});
-		btnBuscar.setBounds(205, 49, 91, 23);
-		add(btnBuscar);
+		JLabel lblMarca = new JLabel("Marca:");
+		lblMarca.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblMarca.setBounds(40, 64, 75, 14);
+		add(lblMarca);
 
 	}
 }

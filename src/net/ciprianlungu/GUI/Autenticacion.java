@@ -1,6 +1,6 @@
 package net.ciprianlungu.GUI;
 
-
+import javax.swing.JOptionPane;
 import java.awt.SystemColor;
 
 import javax.swing.JPanel;
@@ -20,7 +20,7 @@ import javax.swing.JPasswordField;
 public class Autenticacion extends JPanel {
 	private JTextField tfUsuario;
 	private JPasswordField passwordField;
-
+	private Editar JEditar;
 	/**
 	 * Create the panel.
 	 */
@@ -62,6 +62,19 @@ public class Autenticacion extends JPanel {
 					GestorBBDD gestor = new GestorBBDD(usuario,password,"localhost","bbdd_gestmotor");
 					gestor.establecerConexion();
 					gestor.cerrarConexion();
+					
+					removeAll();
+					JOptionPane.showMessageDialog(null,"Has entrado con éxito","Éxito",JOptionPane.WARNING_MESSAGE);
+					
+					JEditar = new Editar();
+					
+					JEditar.setVisible(true);
+					JEditar.invalidate();
+					JEditar.revalidate();
+					JEditar.repaint();
+
+					
+					
 					
 					
 				} catch (ClassNotFoundException | SQLException e) {

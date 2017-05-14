@@ -50,6 +50,8 @@ public class Mainframe extends JFrame {
 	 * Create the frame.
 	 */
 	public Mainframe() {
+		
+		//JFRAME
 		setResizable(false);
 		setBackground(Color.GREEN);
 		getContentPane().setLayout(new CardLayout(0, 0));
@@ -68,6 +70,7 @@ public class Mainframe extends JFrame {
 		} catch (Exception e) {
 		    // If Nimbus is not available, you can set the GUI to another look and feel.
 		}
+		//Bara menu
 		menuBar.setBackground(SystemColor.menu);
 		menuBar.setVisible(false);
 		setJMenuBar(menuBar);
@@ -85,15 +88,7 @@ public class Mainframe extends JFrame {
 		
 		JMenu mnPanel = new JMenu("Panel");
 		menuBar.add(mnPanel);
-		
-		JMenuItem mntmPanel_3 = new JMenuItem("Principal");
-		mntmPanel_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout)contentPane.getLayout();
-				cl.show(contentPane, "Principal");
-			}
-		});
-		mnPanel.add(mntmPanel_3);
+
 		
 		JMenuItem mntmPanel_1 = new JMenuItem("Consultar");
 		mntmPanel_1.addActionListener(new ActionListener() {
@@ -104,6 +99,17 @@ public class Mainframe extends JFrame {
 		});
 		mnPanel.add(mntmPanel_1);
 		
+		JMenuItem mntmPanel_2 = new JMenuItem("Crear Modelos");
+		mntmPanel_2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				CardLayout cl = (CardLayout)contentPane.getLayout();
+				cl.show(contentPane, "CrearModelo");
+			}
+		});
+		mnPanel.add(mntmPanel_2);
+		
+		
+		//JMENU PANEL EDITAR
 		JMenuItem mntmPanel = new JMenuItem("Editar");
 		mntmPanel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -113,9 +119,12 @@ public class Mainframe extends JFrame {
 		});
 		mnPanel.add(mntmPanel);
 		
+		
+		//JMENU AYUDA
 		JMenu mnHelp = new JMenu("Ayuda");
 		menuBar.add(mnHelp);
 		
+		//JMENU ITEM SOBRE..DE AYUDA
 		JMenuItem mntmAbout = new JMenuItem("Sobre..");
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -126,13 +135,18 @@ public class Mainframe extends JFrame {
 			}
 		});
 		mnHelp.add(mntmAbout);
+		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
 		
 		Autenticacion autenticacion = new Autenticacion();
+		CrearModelo crear = new CrearModelo();
+		
 		contentPane.add(autenticacion,"Principal");
+		contentPane.add(crear,"CrearModelo");
 		contentPane.add(new Consultar(),"Consultar");
 		contentPane.add(new Editar(),"Editar");
 	}
