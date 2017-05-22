@@ -26,15 +26,30 @@ public class GestorBBDD {
         this.bbddName = bbddName;
         this.puerto = 3306;
     }
-    public void establecerConexion() throws ClassNotFoundException, SQLException{
+    //INDICAR EL DRIVER JDBC.
+    public void establecerConexion(){
         String driver = "com.mysql.jdbc.Driver";
-        Class.forName(driver);
+        try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
         String servidor = "jdbc:mysql://"+ip+"/"+bbddName;
         String user = usr;
         String pass = pwd;
-        conexion = DriverManager.getConnection(servidor, user, pass);
+        
+        //INTENTO DE CONEXION A LA BBDD
+        try {
+			conexion = DriverManager.getConnection(servidor, user, pass);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
-    public void cerrarConexion() throws SQLException{
-        conexion.close();
+    public void cerrarConexion(){
+        try {
+			conexion.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 }

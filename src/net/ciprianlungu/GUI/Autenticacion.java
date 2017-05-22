@@ -55,32 +55,22 @@ public class Autenticacion extends JPanel {
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					setMenuBarVisible();
-					String usuario = tfUsuario.getText();
-					String password = String.valueOf(passwordField.getPassword());
-					GestorBBDD gestor = new GestorBBDD(usuario,password,"localhost","bbdd_gestmotor");
-					gestor.establecerConexion();
-					gestor.cerrarConexion();
-					
-					removeAll();
-					JOptionPane.showMessageDialog(null,"Has entrado con éxito","Éxito",JOptionPane.WARNING_MESSAGE);
-					
-					JEditar = new Editar();
-					
-					JEditar.setVisible(true);
-					JEditar.invalidate();
-					JEditar.revalidate();
-					JEditar.repaint();
-
-					
-					
-					
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				setMenuBarVisible();
+				String usuario = tfUsuario.getText();
+				String password = String.valueOf(passwordField.getPassword());
+				GestorBBDD gestor = new GestorBBDD(usuario,password,"localhost","bbdd_gestmotor");
+				gestor.establecerConexion();
+				gestor.cerrarConexion();
+				
+				removeAll();
+				JOptionPane.showMessageDialog(null,"Has entrado con éxito","Éxito",JOptionPane.WARNING_MESSAGE);
+				
+				JEditar = new Editar();
+				
+				JEditar.setVisible(true);
+				JEditar.invalidate();
+				JEditar.revalidate();
+				JEditar.repaint();
 			}
 		});
 		
