@@ -6,12 +6,11 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 public class TableModelModelos implements TableModel {
-	ArrayList<Modelo> modelos;
-	ArrayList<Marca> marcas;
+
+	ArrayList<Coche> coches;
 	
-	public TableModelModelos(ArrayList<Modelo> modelos,ArrayList<Marca> marcas){
-		this.modelos=modelos;
-		this.marcas=marcas;
+	public TableModelModelos(ArrayList<Coche> coches){
+		this.coches=coches;
 	}
 	
 	@Override
@@ -60,22 +59,21 @@ public class TableModelModelos implements TableModel {
 
 	@Override
 	public int getRowCount() {
-		return modelos.size();
+		return coches.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Modelo mod = modelos.get(rowIndex);
-		Marca mar = marcas.get(rowIndex);
+		Coche car = coches.get(rowIndex);
 		switch(columnIndex){
 		case 0:
-			return mar.getMarca();
+			return car.getMarca();
 		case 1:
-			return mod.getModelo();
+			return car.getModelo();
 		case 2:
-			return mod.getConsumo();
+			return car.getConsumo();
 		case 3:
-			return mod.getEmisiones();
+			return car.getEmisiones();
 		default:
 			return null;
 		}

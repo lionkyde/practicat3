@@ -5,6 +5,8 @@ import java.awt.SystemColor;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
+import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -64,13 +66,7 @@ public class Autenticacion extends JPanel {
 				
 				removeAll();
 				JOptionPane.showMessageDialog(null,"Has entrado con éxito","Éxito",JOptionPane.WARNING_MESSAGE);
-				
-				JEditar = new Editar();
-				
-				JEditar.setVisible(true);
-				JEditar.invalidate();
-				JEditar.revalidate();
-				JEditar.repaint();
+
 			}
 		});
 		

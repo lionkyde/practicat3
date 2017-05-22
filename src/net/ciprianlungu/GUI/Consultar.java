@@ -12,6 +12,7 @@ import javax.swing.JList;
 import java.awt.BorderLayout;
 import javax.swing.JToolBar;
 
+import net.ciprianlungu.modelo.Coche;
 import net.ciprianlungu.modelo.GestorCoches;
 import net.ciprianlungu.modelo.Marca;
 import net.ciprianlungu.modelo.Modelo;
@@ -28,6 +29,7 @@ import javax.swing.JScrollPane;
 
 public class Consultar extends JPanel {
 	private JTable JtModelos;
+	private JTable table;
 	/**
 	 * Create the panel.
 	 */
@@ -75,6 +77,7 @@ public class Consultar extends JPanel {
 		for(Marca marcaa : marcas){
 			comboBoxMarca.addItem(marcaa.getMarca());
 		}
+		gc.getMarca(comboBoxMarca);
 		panel.add(comboBoxMarca);
 		
 		//SLIDER DE CONSUMO MAXIMO
@@ -87,18 +90,25 @@ public class Consultar extends JPanel {
 		sliderConsumo.setMinorTickSpacing(2);
 		sliderConsumo.setMaximum(30);
 		sliderConsumo.setBounds(451, 11, 316, 41);
+		gc.getConsumo(sliderConsumo.getValue());
 		panel.add(sliderConsumo);
 		
-		//JTABLE DE MODELOS
-		JtModelos = new JTable();
-		JtModelos.setBackground(SystemColor.activeCaption);
-		JtModelos.setBounds(10, 73, 780, 457);
-		panel.add(JtModelos);
+		//SCROLLPANE CON JTABLE
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 48, 450, 187);
+		panel.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		table.setBackground(Color.YELLOW);
+		table.setBounds(10, 73, 780, 457);
 		//TODO HACER SCROLL PARA LA TABLA Y UN ARRAYLIST DE CONSULTA ESPECIFICA
 		
-		ArrayList<Modelo> modelos = gc.getModelos();
 		
-		TableModelModelos tmm = new TableModelModelos(modelos,marcas);
-		JtModelos.setModel(new TableModelModelos(modelos,marcas));
+		ArrayList<Coche> coches = gc.consultaMarcaConsumoCoches();
+		
+		TableModelModelos tmm = new TableModelModelos(coches);
+		table.setModel(new TableModelModelos(coches));
 	}
 }
