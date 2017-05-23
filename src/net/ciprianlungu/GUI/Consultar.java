@@ -17,6 +17,7 @@ import net.ciprianlungu.modelo.GestorCoches;
 import net.ciprianlungu.modelo.Marca;
 import net.ciprianlungu.modelo.Modelo;
 import net.ciprianlungu.modelo.TableModelModelos;
+import net.ciprianlungu.persistencia.GestorBBDDCoche;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -26,10 +27,13 @@ import javax.swing.JSlider;
 import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Consultar extends JPanel {
 	private JTable JtModelos;
 	private JTable table;
+	JSlider sliderConsumo = new JSlider();
 	/**
 	 * Create the panel.
 	 */
@@ -44,17 +48,42 @@ public class Consultar extends JPanel {
 		JToolBar toolBar = new JToolBar();
 		add(toolBar, BorderLayout.NORTH);
 		
-		//BOTON DE CONSULTAR
-		JButton btnConsultar = new JButton("");
-		toolBar.add(btnConsultar);
-		btnConsultar.setIcon(new ImageIcon(Consultar.class.getResource("/assets/Search.jpg")));
-		
-		
 		//CREACION DE PANEL
 		JPanel panel = new JPanel();
 		panel.setBackground(SystemColor.control);
 		add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
+		
+		//BOTON DE CONSULTAR
+		JButton btnConsultar = new JButton("");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//gc.setConsumo();
+
+				
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setBounds(0, 48, 450, 187);
+				panel.add(scrollPane);
+				table = new JTable();
+				scrollPane.setViewportView(table);
+				
+				table.setBackground(Color.YELLOW);
+				table.setBounds(10, 73, 780, 457);
+				
+				float consumoParseado= (float)sliderConsumo.getValue();
+				
+				ArrayList<Coche> coches = gc.consultaMarcaConsumoCoches(consumoParseado);
+				//TODO FALTA PASAR PARAMETRO DE MARCAS PARA CONSULTA
+				
+				TableModelModelos tmm = new TableModelModelos(coches);
+				table.setModel(new TableModelModelos(coches));
+			}
+		});
+		toolBar.add(btnConsultar);
+		btnConsultar.setIcon(new ImageIcon(Consultar.class.getResource("/assets/Search.jpg")));
+		
+		
+
 		
 		
 		//LABEL DE MARCA
@@ -77,11 +106,10 @@ public class Consultar extends JPanel {
 		for(Marca marcaa : marcas){
 			comboBoxMarca.addItem(marcaa.getMarca());
 		}
-		gc.getMarca(comboBoxMarca);
 		panel.add(comboBoxMarca);
 		
 		//SLIDER DE CONSUMO MAXIMO
-		JSlider sliderConsumo = new JSlider();
+		
 		sliderConsumo.setMajorTickSpacing(2);
 		sliderConsumo.setToolTipText("");
 		sliderConsumo.setPaintLabels(true);
@@ -90,25 +118,12 @@ public class Consultar extends JPanel {
 		sliderConsumo.setMinorTickSpacing(2);
 		sliderConsumo.setMaximum(30);
 		sliderConsumo.setBounds(451, 11, 316, 41);
-		gc.getConsumo(sliderConsumo.getValue());
+		
 		panel.add(sliderConsumo);
 		
 		//SCROLLPANE CON JTABLE
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 48, 450, 187);
-		panel.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
-		table.setBackground(Color.YELLOW);
-		table.setBounds(10, 73, 780, 457);
-		//TODO HACER SCROLL PARA LA TABLA Y UN ARRAYLIST DE CONSULTA ESPECIFICA
+
 		
 		
-		ArrayList<Coche> coches = gc.consultaMarcaConsumoCoches();
-		
-		TableModelModelos tmm = new TableModelModelos(coches);
-		table.setModel(new TableModelModelos(coches));
 	}
 }

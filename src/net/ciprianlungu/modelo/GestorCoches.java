@@ -9,6 +9,8 @@ import net.ciprianlungu.persistencia.GestorBBDDCoche;
 
 public class GestorCoches {
 	GestorBBDDCoche gc;
+	private int resultado;
+	
 	public ArrayList<Eficiencia> getEficiencias(){
 		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
 		ArrayList<Eficiencia> eficiencias = gc.getEficiencias();
@@ -25,9 +27,9 @@ public class GestorCoches {
 		ArrayList<Marca> marcas = gc.getMarcas();
 		return marcas;
 	}
-	public ArrayList<Coche> consultaMarcaConsumoCoches(){
+	public ArrayList<Coche> consultaMarcaConsumoCoches(Float consumo){
 		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
-		ArrayList<Coche> coches = gc.getCoches();
+		ArrayList<Coche> coches = gc.getCoches(consumo);
 		return coches;
 	}
 	public void addModelos(int id_marca,String modelo,float consumo,int emisiones,String clasificacion){
@@ -40,15 +42,11 @@ public class GestorCoches {
 		return resultado;
 	}
 	
-	public void getMarca(JComboBox comboBoxMarca){
-		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
-		JComboBox resultado = gc.getMarca(comboBoxMarca);
+
+	public void setConsumo(int i){
+		this.resultado = i;
 	}
-	
-	public void getConsumo(int i){
-		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
-		int resultado = gc.getConsumo(i);
-		//TODO FALTA HACER COGER DATOS DE CONSUMO DEL SLIDER Y DEL COMBOBOX PARA UTILIZAR EN CONSULTA DE BBDD
-		//TODO SALTA ERROR DE SINSTASIS EN BBDD
+	public int getConsumo(){
+		return resultado;
 	}
 }

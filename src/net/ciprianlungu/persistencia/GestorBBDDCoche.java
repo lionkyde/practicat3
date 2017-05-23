@@ -12,24 +12,19 @@ import javax.swing.JSlider;
 import net.ciprianlungu.GUI.Consultar;
 import net.ciprianlungu.modelo.Coche;
 import net.ciprianlungu.modelo.Eficiencia;
+import net.ciprianlungu.modelo.GestorCoches;
 import net.ciprianlungu.modelo.Marca;
 import net.ciprianlungu.modelo.Modelo;
 
 public class GestorBBDDCoche extends GestorBBDD {
 	
-	private JComboBox marca;
-	private int consumo;
-	
+	private String marca;
+	GestorCoches gestorcars = new GestorCoches();
 	public GestorBBDDCoche(String usr, String pwd, String ip, String bbddName) {
 		super(usr, pwd, ip, bbddName);
 	}
+
 	
-	public JComboBox getMarca(JComboBox comboBoxMarca){
-		return this.marca=comboBoxMarca;
-	}
-	public int getConsumo(int i){
-		 return this.consumo=i;
-	}
 	
 	//ARRAYLIST PARA OBTENER TODOS LOS MODELOS
 	public ArrayList<Modelo> getModelos(){
@@ -136,16 +131,15 @@ public class GestorBBDDCoche extends GestorBBDD {
 		}
 		return id;
 	}
-	 public ArrayList<Coche> getCoches(){
+	 public ArrayList<Coche> getCoches(Float consumo){
 		ArrayList<Coche> coches = new ArrayList();
-		
 		try {
 			establecerConexion();
 			String sql = 
-					"SELECT ma.marca,mo.modelo,mo.consumo,mo.emisiones"+
-					"from marcas ma,modelos mo"+
-					"where ma.id=mo.id_marca and"+
-					"lower(ma.marca)like 'audi' and mo.consumo<8;";
+					"SELECT ma.marca,mo.modelo,mo.consumo,mo.emisiones "+
+					"from marcas ma,modelos mo "+
+					"where ma.id=mo.id_marca and "+
+					"lower(ma.marca)like 'iveco daily' and mo.consumo<="+consumo+";";
 			Statement st = conexion.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()){
