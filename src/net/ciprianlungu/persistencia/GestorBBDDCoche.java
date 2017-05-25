@@ -114,6 +114,10 @@ public class GestorBBDDCoche extends GestorBBDD {
 			e.printStackTrace();
 		}
 	}
+	public ArrayList<Coche> consultaTodasMarcas(String todasMarcas){
+		//TODO CONSULTA DE TODAS LAS MARCAS
+	}
+	
 	public int consultaIdMarca(String modelo){
 		int id = 0;
 		try {

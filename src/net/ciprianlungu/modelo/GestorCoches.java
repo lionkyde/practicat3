@@ -41,12 +41,10 @@ public class GestorCoches {
 		int resultado = gc.consultaIdMarca(modelo);
 		return resultado;
 	}
-	
-
-	public void setConsumo(int i){
-		this.resultado = i;
+	public ArrayList<Coche> consultaTodasMarcas(String todas){
+		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
+		ArrayList<Coche> coches = gc.consultaTodasMarcas(todas);
+		return coches;
 	}
-	public int getConsumo(){
-		return resultado;
-	}
+	//TODO FALTA COGER LA INFORMACION DE TODAS LAS MARCAS PARA COMPARAR Y HACER CONSULTA DE TODAS LAS MARCAS Y MODELOS
 }

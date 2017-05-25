@@ -109,17 +109,6 @@ public class Mainframe extends JFrame {
 		mnPanel.add(mntmPanel_2);
 		
 		
-		//JMENU PANEL EDITAR
-		JMenuItem mntmPanel = new JMenuItem("Editar");
-		mntmPanel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout)contentPane.getLayout();
-				cl.show(contentPane, "Editar");
-			}
-		});
-		mnPanel.add(mntmPanel);
-		
-		
 		//JMENU AYUDA
 		JMenu mnHelp = new JMenu("Ayuda");
 		menuBar.add(mnHelp);

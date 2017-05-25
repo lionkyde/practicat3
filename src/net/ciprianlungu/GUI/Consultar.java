@@ -30,15 +30,23 @@ import javax.swing.JComboBox;
 import javax.swing.JSlider;
 import java.awt.Font;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import com.sun.glass.events.MouseEvent;
+
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
 
 public class Consultar extends JPanel {
 	private JTable JtModelos;
 	private JTable table;
 	JSlider sliderConsumo = new JSlider();
 	JComboBox comboBoxMarca = new JComboBox();
+	JButton btnBorrar = new JButton("");
 	/**
 	 * Create the panel.
 	 */
@@ -62,6 +70,7 @@ public class Consultar extends JPanel {
 		//COMBOBOX DE MARCAS
 		ArrayList<Marca> marcas = gc.getMarcas();
 		comboBoxMarca.setBounds(74, 23, 201, 20);
+		comboBoxMarca.addItem("Todas las marcas");
 		for(Marca marcaa : marcas){
 			comboBoxMarca.addItem(marcaa.getMarca());
 		}
@@ -119,20 +128,29 @@ public class Consultar extends JPanel {
 		scrollPane.setBounds(0, 72, 777, 458);
 		panel.add(scrollPane);
 		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
+		
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+
+				btnBorrar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						
+					}
+				});
+				toolBar.add(btnBorrar);
+				btnBorrar.setIcon(new ImageIcon(Consultar.class.getResource("/assets/delete.png")));	
+			}
+			
+		});
+
+		
 		
 		table.setBackground(Color.YELLOW);
 		table.setBounds(10, 73, 780, 457);
 		
-		//JPOPUPMENU MENU DESPLEGABLE CLICK DERECHO
-		JPopupMenu popupmenu = new JPopupMenu();
-		JMenuItem menuEdit = new JMenuItem("Editar");
-		JMenuItem menuDelete = new JMenuItem("Borrar");
 		
-		popupmenu.add(menuEdit);
-		popupmenu.add(menuDelete);
-		table.setComponentPopupMenu(popupmenu);
-		
-		//TODO AÑADIR LISTENER DE POPUP 
 	}
 }
