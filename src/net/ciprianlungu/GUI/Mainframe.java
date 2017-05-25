@@ -148,7 +148,6 @@ public class Mainframe extends JFrame {
 		contentPane.add(autenticacion,"Principal");
 		contentPane.add(crear,"CrearModelo");
 		contentPane.add(new Consultar(),"Consultar");
-		contentPane.add(new Editar(),"Editar");
 	}
 	
 	public void setMenuBarVisible(){

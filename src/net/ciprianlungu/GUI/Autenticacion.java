@@ -22,7 +22,6 @@ import javax.swing.JPasswordField;
 public class Autenticacion extends JPanel {
 	private JTextField tfUsuario;
 	private JPasswordField passwordField;
-	private Editar JEditar;
 	/**
 	 * Create the panel.
 	 */

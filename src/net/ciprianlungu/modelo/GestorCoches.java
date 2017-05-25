@@ -27,9 +27,9 @@ public class GestorCoches {
 		ArrayList<Marca> marcas = gc.getMarcas();
 		return marcas;
 	}
-	public ArrayList<Coche> consultaMarcaConsumoCoches(Float consumo){
+	public ArrayList<Coche> consultaMarcaConsumoCoches(String marca,Float consumo){
 		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
-		ArrayList<Coche> coches = gc.getCoches(consumo);
+		ArrayList<Coche> coches = gc.getCoches(marca,consumo);
 		return coches;
 	}
 	public void addModelos(int id_marca,String modelo,float consumo,int emisiones,String clasificacion){

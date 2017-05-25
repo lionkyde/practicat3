@@ -131,15 +131,16 @@ public class GestorBBDDCoche extends GestorBBDD {
 		}
 		return id;
 	}
-	 public ArrayList<Coche> getCoches(Float consumo){
+	 public ArrayList<Coche> getCoches(String marca,Float consumo){
 		ArrayList<Coche> coches = new ArrayList();
+		
 		try {
 			establecerConexion();
 			String sql = 
 					"SELECT ma.marca,mo.modelo,mo.consumo,mo.emisiones "+
 					"from marcas ma,modelos mo "+
 					"where ma.id=mo.id_marca and "+
-					"lower(ma.marca)like 'iveco daily' and mo.consumo<="+consumo+";";
+					"lower(ma.marca)like \'"+marca+"\' and mo.consumo<="+consumo+";";
 			Statement st = conexion.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()){

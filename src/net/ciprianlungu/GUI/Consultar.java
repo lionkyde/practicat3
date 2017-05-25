@@ -34,6 +34,7 @@ public class Consultar extends JPanel {
 	private JTable JtModelos;
 	private JTable table;
 	JSlider sliderConsumo = new JSlider();
+	JComboBox comboBoxMarca = new JComboBox();
 	/**
 	 * Create the panel.
 	 */
@@ -54,26 +55,26 @@ public class Consultar extends JPanel {
 		add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
+		//COMBOBOX DE MARCAS
+		ArrayList<Marca> marcas = gc.getMarcas();
+		comboBoxMarca.setBounds(74, 23, 201, 20);
+		for(Marca marcaa : marcas){
+			comboBoxMarca.addItem(marcaa.getMarca());
+		}
+		panel.add(comboBoxMarca);
+		
 		//BOTON DE CONSULTAR
 		JButton btnConsultar = new JButton("");
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//gc.setConsumo();
 
 				
-				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(0, 48, 450, 187);
-				panel.add(scrollPane);
-				table = new JTable();
-				scrollPane.setViewportView(table);
-				
-				table.setBackground(Color.YELLOW);
-				table.setBounds(10, 73, 780, 457);
 				
 				float consumoParseado= (float)sliderConsumo.getValue();
+				String marca=(String)comboBoxMarca.getSelectedItem();
 				
-				ArrayList<Coche> coches = gc.consultaMarcaConsumoCoches(consumoParseado);
-				//TODO FALTA PASAR PARAMETRO DE MARCAS PARA CONSULTA
+				ArrayList<Coche> coches = gc.consultaMarcaConsumoCoches(marca,consumoParseado);
+				
 				
 				TableModelModelos tmm = new TableModelModelos(coches);
 				table.setModel(new TableModelModelos(coches));
@@ -99,15 +100,6 @@ public class Consultar extends JPanel {
 		lblNewLabel.setBounds(298, 24, 187, 14);
 		panel.add(lblNewLabel);
 		
-		//COMBOBOX DE MARCAS
-		ArrayList<Marca> marcas = gc.getMarcas();
-		JComboBox comboBoxMarca = new JComboBox();
-		comboBoxMarca.setBounds(74, 23, 201, 20);
-		for(Marca marcaa : marcas){
-			comboBoxMarca.addItem(marcaa.getMarca());
-		}
-		panel.add(comboBoxMarca);
-		
 		//SLIDER DE CONSUMO MAXIMO
 		
 		sliderConsumo.setMajorTickSpacing(2);
@@ -122,7 +114,14 @@ public class Consultar extends JPanel {
 		panel.add(sliderConsumo);
 		
 		//SCROLLPANE CON JTABLE
-
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 72, 777, 458);
+		panel.add(scrollPane);
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		table.setBackground(Color.YELLOW);
+		table.setBounds(10, 73, 780, 457);
 		
 		
 	}
