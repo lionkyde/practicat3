@@ -2,6 +2,8 @@ package net.ciprianlungu.GUI;
 
 
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+
 import java.awt.SystemColor;
 import java.util.ArrayList;
 
@@ -9,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
+
 import java.awt.BorderLayout;
 import javax.swing.JToolBar;
 
@@ -84,9 +88,6 @@ public class Consultar extends JPanel {
 		btnConsultar.setIcon(new ImageIcon(Consultar.class.getResource("/assets/Search.jpg")));
 		
 		
-
-		
-		
 		//LABEL DE MARCA
 		JLabel lblMarca = new JLabel("Marca");
 		lblMarca.setFont(new Font("Verdana", Font.BOLD, 15));
@@ -123,6 +124,15 @@ public class Consultar extends JPanel {
 		table.setBackground(Color.YELLOW);
 		table.setBounds(10, 73, 780, 457);
 		
+		//JPOPUPMENU MENU DESPLEGABLE CLICK DERECHO
+		JPopupMenu popupmenu = new JPopupMenu();
+		JMenuItem menuEdit = new JMenuItem("Editar");
+		JMenuItem menuDelete = new JMenuItem("Borrar");
 		
+		popupmenu.add(menuEdit);
+		popupmenu.add(menuDelete);
+		table.setComponentPopupMenu(popupmenu);
+		
+		//TODO AÑADIR LISTENER DE POPUP 
 	}
 }
