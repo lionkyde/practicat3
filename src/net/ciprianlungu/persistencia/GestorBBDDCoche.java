@@ -28,9 +28,9 @@ public class GestorBBDDCoche extends GestorBBDD {
 	
 	
 	//ARRAYLIST PARA OBTENER TODOS LOS MODELOS
-	public ArrayList<Modelo> getModelos(){
+	public ArrayList<Modelo> getModelos() throws SQLException, ClassNotFoundException{
 		ArrayList<Modelo> modelos = new ArrayList();
-		try {
+
 			establecerConexion();
 			String sql = "SELECT * FROM modelos";
 			Statement st = conexion.createStatement();
@@ -45,16 +45,14 @@ public class GestorBBDDCoche extends GestorBBDD {
 						);
 			}
 			cerrarConexion();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 		
 		return modelos;
 	}
 	
-	public ArrayList<Marca> getMarcas(){
+	public ArrayList<Marca> getMarcas() throws SQLException, ClassNotFoundException{
 		ArrayList<Marca> marcas = new ArrayList();
-		try {
+
 			establecerConexion();
 			String sql = "SELECT * FROM marcas";
 			Statement st = conexion.createStatement();
@@ -69,14 +67,11 @@ public class GestorBBDDCoche extends GestorBBDD {
 			
 			
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 		return marcas;
 	}
-	public ArrayList<Eficiencia> getEficiencias(){
+	public ArrayList<Eficiencia> getEficiencias() throws SQLException, ClassNotFoundException{
 		ArrayList<Eficiencia> eficiencias = new ArrayList();
-		try {
 			establecerConexion();
 			String sql = "SELECT c_energetica from eficiencias";
 			Statement st = conexion.createStatement();
@@ -87,16 +82,11 @@ public class GestorBBDDCoche extends GestorBBDD {
 						);
 			}
 			cerrarConexion();
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		return eficiencias;
 	}
 	
-	public void addModelo(int id_marca,String modelo,float consumo,int emisiones,String clasificacion){
-		try {
+	public void addModelo(int id_marca,String modelo,float consumo,int emisiones,String clasificacion) throws SQLException, ClassNotFoundException{
+
 			establecerConexion();
 			String sql =
 					"INSERT INTO modelos(ID_MARCA,MODELO,CONSUMO,EMISIONES,C_ENERGETICA) VALUES"
@@ -111,13 +101,10 @@ public class GestorBBDDCoche extends GestorBBDD {
 			
 			cerrarConexion();
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
-	public ArrayList<Coche> consultaTodasMarcas(Float consumo){
+	public ArrayList<Coche> consultaTodasMarcas(Float consumo) throws SQLException, ClassNotFoundException{
 		 coches = new ArrayList();
-		try {
+
 			establecerConexion();
 			String sql = "SELECT mar.marca,mo.modelo,mo.consumo,mo.emisiones "+
 						 "from marcas mar,modelos mo "+
@@ -135,16 +122,14 @@ public class GestorBBDDCoche extends GestorBBDD {
 			}
 			
 		cerrarConexion();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 		
 		return coches;
 	}
 	
-	public int consultaIdMarca(String modelo){
+	public int consultaIdMarca(String modelo) throws SQLException, ClassNotFoundException{
 		int id = 0;
-		try {
+
 			establecerConexion();
 			String sql = "SELECT id from marcas where lower(marca) like \""+modelo+"\"";
 			Statement st = conexion.createStatement();
@@ -154,15 +139,12 @@ public class GestorBBDDCoche extends GestorBBDD {
 			}
 			cerrarConexion();
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		return id;
 	}
-	 public ArrayList<Coche> getCoches(String marca,Float consumo){
+	 public ArrayList<Coche> getCoches(String marca,Float consumo) throws SQLException, ClassNotFoundException{
 		coches = new ArrayList();
 		
-		try {
+
 			establecerConexion();
 			String sql = 
 					"SELECT ma.marca,mo.modelo,mo.consumo,mo.emisiones "+
@@ -182,17 +164,15 @@ public class GestorBBDDCoche extends GestorBBDD {
 			
 			
 			cerrarConexion();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 		return coches;
 	}
 
 
 
-	public int consultaConsumoMaximo() {
+	public int consultaConsumoMaximo() throws SQLException, ClassNotFoundException {
 		int consumoMaximo = 0;
-		try {
+
 			establecerConexion();
 			String sql="SELECT MAX(consumo) FROM modelos;";
 			Statement st = conexion.createStatement();
@@ -202,23 +182,19 @@ public class GestorBBDDCoche extends GestorBBDD {
 				consumoMaximo = rs.getInt("max(consumo)");
 			}
 			cerrarConexion();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 
 		
 		
 		return consumoMaximo;
 	}
-	public void borrarModelo(String modelo){
-		try {
+	public void borrarModelo(String modelo) throws SQLException, ClassNotFoundException{
+
 			establecerConexion();
 			String sql ="DELETE FROM modelos where lower(modelo) like \'"+modelo+"\';";
 			Statement st = conexion.createStatement();
 			st.executeUpdate(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 		cerrarConexion();
 	}
 }

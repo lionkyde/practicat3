@@ -39,6 +39,7 @@ import com.sun.glass.events.MouseEvent;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ChangeListener;
@@ -71,12 +72,22 @@ public class Consultar extends JPanel {
 		panel.setLayout(null);
 		
 		//COMBOBOX DE MARCAS
-		ArrayList<Marca> marcas = gc.getMarcas();
+		ArrayList<Marca> marcas;
 		String todasMarcas="Todas las marcas";
-		comboBoxMarca.setBounds(74, 23, 201, 20);
-		comboBoxMarca.addItem(todasMarcas);
-		for(Marca marcaa : marcas){
-			comboBoxMarca.addItem(marcaa.getMarca());
+		try {
+			marcas = gc.getMarcas();
+			
+			comboBoxMarca.setBounds(74, 23, 201, 20);
+			comboBoxMarca.addItem(todasMarcas);
+			for(Marca marcaa : marcas){
+				comboBoxMarca.addItem(marcaa.getMarca());
+			}	
+		} catch (ClassNotFoundException e1) {
+			JOptionPane.showMessageDialog(null,"Error del driver");
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null,"Error en la base de datos 2");
+			e1.printStackTrace();
 		}
 		panel.add(comboBoxMarca);
 		
@@ -89,14 +100,28 @@ public class Consultar extends JPanel {
 				String marca=(String)comboBoxMarca.getSelectedItem(); //el item de comboMarca seleccionado
 				float consumoParseado= (float)sliderConsumo.getValue(); //valor del slider pasamos al float
 				if(todasMarcas.equals(marca)){
-					coches = gc.consultaTodasMarcas(consumoParseado);
+					try {
+						coches = gc.consultaTodasMarcas(consumoParseado);
+					} catch (ClassNotFoundException e) {
+						JOptionPane.showMessageDialog(null,"Error del driver");
+						e.printStackTrace();
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(null,"Error de base de datos 3");
+						e.printStackTrace();
+					}
 					System.out.println("IMPRIMIENDO TODAS LAS MARCAS");
 				}else{
 					System.out.println("Imprimiendo por marca");
 					
-					coches = gc.consultaMarcaConsumoCoches(marca,consumoParseado);
-					
-					
+					try {
+						coches = gc.consultaMarcaConsumoCoches(marca,consumoParseado);
+					} catch (ClassNotFoundException e) {
+						JOptionPane.showMessageDialog(null,"Error del driver");
+						e.printStackTrace();
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(null,"Error de la base de datos 4");
+						e.printStackTrace();
+					}
 
 				}
 				TableModelModelos tmm = new TableModelModelos(coches);
@@ -113,15 +138,29 @@ public class Consultar extends JPanel {
 				String marca=(String)comboBoxMarca.getSelectedItem(); //el item de comboMarca seleccionado
 				float consumoParseado= (float)sliderConsumo.getValue(); //valor del slider pasamos al float
 				if(todasMarcas.equals(marca)){
-					coches = gc.consultaTodasMarcas(consumoParseado);
+					try {
+						coches = gc.consultaTodasMarcas(consumoParseado);
+					} catch (ClassNotFoundException e1) {
+						JOptionPane.showMessageDialog(null,"Error del driver");
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null,"Error de la base de datos 5");
+						e1.printStackTrace();
+					}
 					System.out.println("IMPRIMIENDO TODAS LAS MARCAS");
 				}else{
 					System.out.println("Imprimiendo por marca");
 					
-					coches = gc.consultaMarcaConsumoCoches(marca,consumoParseado);
+					try {
+						coches = gc.consultaMarcaConsumoCoches(marca,consumoParseado);
+					} catch (ClassNotFoundException e1) {
+						JOptionPane.showMessageDialog(null,"Error del driver");
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null,"Error de la base de datos 6");
+						e1.printStackTrace();
+					}
 					
-					
-
 				}
 				TableModelModelos tmm = new TableModelModelos(coches);
 				table.setModel(new TableModelModelos(coches));
@@ -164,18 +203,36 @@ public class Consultar extends JPanel {
 		sliderConsumo.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				lblMostradoConsumo.setText(Integer.toString(sliderConsumo.getValue()));
-				lblConsumoMaximo.setText(Float.toString(gc.consultaConsumoMaximo()));
-				sliderConsumo.setMaximum(gc.consultaConsumoMaximo());
+				try {
+					lblConsumoMaximo.setText(Float.toString(gc.consultaConsumoMaximo()));
+					sliderConsumo.setMaximum(gc.consultaConsumoMaximo());
+				} catch (ClassNotFoundException e) {
+					JOptionPane.showMessageDialog(null,"Error del driver");
+					e.printStackTrace();
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null,"Error de la base de datos 7");
+					e.printStackTrace();
+				}
+				
 			}
 		});
 		
 		//SLIDER DE CONSUMO MAXIMO
 		
 		sliderConsumo.setMajorTickSpacing(2);
-		sliderConsumo.setToolTipText("");
-		sliderConsumo.setValue(gc.consultaConsumoMaximo());
+		sliderConsumo.setToolTipText("");	
 		sliderConsumo.setMinorTickSpacing(2);
-		System.out.println(gc.consultaConsumoMaximo());
+		try {
+			sliderConsumo.setValue(gc.consultaConsumoMaximo());
+			System.out.println(gc.consultaConsumoMaximo());
+		} catch (ClassNotFoundException e1) {
+			JOptionPane.showMessageDialog(null,"Error de driver");
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null,"Error de la base de datos 8");
+			e1.printStackTrace();
+		}
+		
 
 		sliderConsumo.setBounds(392, 23, 316, 41);
 		
@@ -210,8 +267,15 @@ public class Consultar extends JPanel {
 					int row = table.getSelectedRow();
 					String modeloSeleccionado=(String)table.getValueAt(row,1); //FILA Y COLUMNA(AMBOS CUENTAN DESDE 0,1,2,3..)
 					System.out.println(modeloSeleccionado);
-					
-					gc.borrarModelo(modeloSeleccionado);
+					try {
+						gc.borrarModelo(modeloSeleccionado);
+					} catch (ClassNotFoundException e) {
+						JOptionPane.showMessageDialog(null,"Error de la carga de driver");
+						e.printStackTrace();
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(null,"Error de la base de datos 9");
+						e.printStackTrace();
+					}
 					System.out.println("BORRADO CON EXITO");
 				}else{
 					System.out.println("He salido");

@@ -41,6 +41,7 @@ import com.sun.glass.events.MouseEvent;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ChangeListener;
@@ -86,7 +87,7 @@ public class CrearBorrarMarca extends JPanel {
 					System.out.println("Ejecutado guardar boton");
 					String marca = tfMarca.getText();
 					
-					gc.addMarcas(marca);
+					//gc.addMarcas(marca);
 				}
 			}
 		});
@@ -110,7 +111,15 @@ public class CrearBorrarMarca extends JPanel {
 		JButton btnBuscar = new JButton("Buscar\r\n");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				marcas = gc.getMarcas();
+				try {
+					marcas = gc.getMarcas();
+				} catch (ClassNotFoundException e1) {
+					JOptionPane.showMessageDialog(null,"Error de carga de drivers");
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null,"Error de la base de datos 10");
+					e1.printStackTrace();
+				}
 				
 				TableModelMarcas tmm = new TableModelMarcas(marcas);
 				table.setModel(new TableModelMarcas(marcas));
@@ -126,7 +135,15 @@ public class CrearBorrarMarca extends JPanel {
 		btnRecargar.setIcon(new ImageIcon(CrearModelo.class.getResource("/assets/recargar.png")));
 		btnRecargar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				marcas = gc.getMarcas();
+				try {
+					marcas = gc.getMarcas();
+				} catch (ClassNotFoundException e1) {
+					JOptionPane.showMessageDialog(null,"Error de carga de drivers");
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null,"Error de la base de datos 11");
+					e1.printStackTrace();
+				}
 				
 				TableModelMarcas tmm = new TableModelMarcas(marcas);
 				table.setModel(new TableModelMarcas(marcas));

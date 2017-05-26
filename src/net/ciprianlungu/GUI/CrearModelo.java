@@ -22,15 +22,23 @@ import net.ciprianlungu.modelo.Marca;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class CrearModelo extends JPanel {
 	private JTextField tfModelo;
 	private JTextField tfConsumo;
 	private JTextField tfEmisiones;
+	JComboBox comboBoxCEnergetica;
+	JComboBox comboBoxMarca;
+	ArrayList<Marca> marcas;
 	GestorCoches gc = new GestorCoches();
 	/**
 	 * Create the panel.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 *  
+	 * 
 	 */
 	public CrearModelo() {
 		setBackground(SystemColor.info);	
@@ -50,22 +58,44 @@ public class CrearModelo extends JPanel {
 		panel.setLayout(null);
 		
 		//COMBO DE MARCAS
-		ArrayList<Marca> marcas = gc.getMarcas();
-		JComboBox comboBoxMarca = new JComboBox();
-		comboBoxMarca.setBounds(135, 71, 130, 20);
-		for(Marca marcaa : marcas){
-			comboBoxMarca.addItem(marcaa.getMarca());
-		}
-		panel.add(comboBoxMarca);
+			try {
+				marcas = gc.getMarcas();
+			} catch (ClassNotFoundException e1) {
+				JOptionPane.showMessageDialog(null,"Error de carga de datos");
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(null,"ERROR, NO HAY CONEXION CON LA BASE DE DATOS");
+				e1.printStackTrace();
+			}
+
+			comboBoxMarca = new JComboBox();
+			comboBoxMarca.setBounds(135, 71, 130, 20);
+			for(Marca marcaa : marcas){
+				comboBoxMarca.addItem(marcaa.getMarca());
+			}
+			panel.add(comboBoxMarca);
+
+
+	
 		
 		//COMBO DE CALIFICACION ENERGETICA
-		ArrayList<Eficiencia> eficiencias = gc.getEficiencias();
-		JComboBox comboBoxCEnergetica = new JComboBox();
-		comboBoxCEnergetica.setBounds(276, 292, 45, 20);
-		for(Eficiencia eficienciaa : eficiencias){
-			comboBoxCEnergetica.addItem(eficienciaa.getCalificacion());
+		ArrayList<Eficiencia> eficiencias;
+		try {
+			eficiencias = gc.getEficiencias();
+			comboBoxCEnergetica = new JComboBox();
+			comboBoxCEnergetica.setBounds(276, 292, 45, 20);
+			for(Eficiencia eficienciaa : eficiencias){
+				comboBoxCEnergetica.addItem(eficienciaa.getCalificacion());
+			}
+			panel.add(comboBoxCEnergetica);
+		} catch (ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(null,"Error de carga de datos");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error de la base de datos 13");
+			e.printStackTrace();
 		}
-		panel.add(comboBoxCEnergetica);
+
 		
 		
 		//TEXTFIELD DE MODELO
@@ -102,7 +132,7 @@ public class CrearModelo extends JPanel {
 					GestorCoches gc = new GestorCoches();
 					
 					String marca = String.valueOf(comboBoxMarca.getSelectedItem()); //Combo seleccionado
-					int idMarcaResultado = gc.consultaIdMarca(marca); //guardamos la idMarca del combo seleccionado
+					
 					
 					String modeloResultado = tfModelo.getText();
 					
@@ -114,8 +144,17 @@ public class CrearModelo extends JPanel {
 					
 					String clasificacionResultado = String.valueOf(comboBoxCEnergetica.getSelectedItem());
 					
-					gc.addModelos(idMarcaResultado, modeloResultado, consumoParsed, emisionesParsed, clasificacionResultado);
-					
+					int idMarcaResultado;
+					try {
+						idMarcaResultado = gc.consultaIdMarca(marca); //guardamos la idMarca del combo seleccionado
+						gc.addModelos(idMarcaResultado, modeloResultado, consumoParsed, emisionesParsed, clasificacionResultado);
+					} catch (ClassNotFoundException e) {
+						JOptionPane.showMessageDialog(null,"Error de carga de datos");
+						e.printStackTrace();
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(null,"Error de carga de datos 14");
+						e.printStackTrace();
+					} 
 					JOptionPane.showMessageDialog(null, "Añadido con éxito en la base de datos");
 					
 				}else{

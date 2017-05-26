@@ -60,8 +60,17 @@ public class Autenticacion extends JPanel {
 				String usuario = tfUsuario.getText();
 				String password = String.valueOf(passwordField.getPassword());
 				GestorBBDD gestor = new GestorBBDD(usuario,password,"localhost","bbdd_gestmotor");
-				gestor.establecerConexion();
-				gestor.cerrarConexion();
+				try {
+					gestor.establecerConexion();
+					gestor.cerrarConexion();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,"Error de carga de driver");
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null,"Error a la base de datos1");
+					e.printStackTrace();
+				}
+				
 				
 				removeAll();
 				JOptionPane.showMessageDialog(null,"Has entrado con éxito","Éxito",JOptionPane.WARNING_MESSAGE);
