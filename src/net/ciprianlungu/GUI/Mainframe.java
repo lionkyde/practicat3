@@ -108,6 +108,15 @@ public class Mainframe extends JFrame {
 		});
 		mnPanel.add(mntmPanel_2);
 		
+		JMenuItem mntmPanel_3 = new JMenuItem("Crear/Borrar Marcas");
+		mntmPanel_3.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				CardLayout cl = (CardLayout)contentPane.getLayout();
+				cl.show(contentPane,"CrearBorrarMarca");
+			}
+		});
+		mnPanel.add(mntmPanel_3);
+		
 		
 		//JMENU AYUDA
 		JMenu mnHelp = new JMenu("Ayuda");
@@ -132,11 +141,14 @@ public class Mainframe extends JFrame {
 		contentPane.setLayout(new CardLayout(0, 0));
 		
 		Autenticacion autenticacion = new Autenticacion();
-		CrearModelo crear = new CrearModelo();
+		CrearModelo crearModelo = new CrearModelo();
+		Consultar consulta = new Consultar();
+		CrearBorrarMarca crearMarca = new CrearBorrarMarca();
 		
 		contentPane.add(autenticacion,"Principal");
-		contentPane.add(crear,"CrearModelo");
-		contentPane.add(new Consultar(),"Consultar");
+		contentPane.add(crearModelo,"CrearModelo");
+		contentPane.add(consulta,"Consultar");
+		contentPane.add(crearMarca,"CrearBorrarMarca");
 	}
 	
 	public void setMenuBarVisible(){
