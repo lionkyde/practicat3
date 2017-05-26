@@ -36,6 +36,7 @@ public class GestorCoches {
 		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
 		gc.addModelo(id_marca, modelo, consumo, emisiones, clasificacion);
 	}
+	//TODO FALTA CREAR EL METODO PARA AÑADIR LAS MARCAS
 	public int consultaIdMarca(String modelo){
 		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
 		int resultado = gc.consultaIdMarca(modelo);

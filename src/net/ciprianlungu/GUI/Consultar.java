@@ -45,7 +45,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
 public class Consultar extends JPanel {
-	private JTable JtModelos;
 	private JTable table;
 	JSlider sliderConsumo = new JSlider();
 	JComboBox comboBoxMarca = new JComboBox();
