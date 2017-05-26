@@ -19,6 +19,7 @@ import net.ciprianlungu.modelo.Modelo;
 public class GestorBBDDCoche extends GestorBBDD {
 	
 	private String marca;
+	ArrayList<Coche> coches;
 	GestorCoches gestorcars = new GestorCoches();
 	public GestorBBDDCoche(String usr, String pwd, String ip, String bbddName) {
 		super(usr, pwd, ip, bbddName);
@@ -114,8 +115,31 @@ public class GestorBBDDCoche extends GestorBBDD {
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<Coche> consultaTodasMarcas(String todasMarcas){
-		//TODO CONSULTA DE TODAS LAS MARCAS
+	public ArrayList<Coche> consultaTodasMarcas(Float consumo){
+		 coches = new ArrayList();
+		try {
+			establecerConexion();
+			String sql = "SELECT mar.marca,mo.modelo,mo.consumo,mo.emisiones "+
+						 "from marcas mar,modelos mo "+
+						 "where mar.id=mo.id_marca and "+
+						 "mo.consumo<="+consumo+";";
+			Statement st = conexion.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				coches.add(new Coche(
+						rs.getString("marca"),
+						rs.getString("modelo"),
+						rs.getFloat("consumo"),
+						rs.getFloat("emisiones"))
+						);
+			}
+			
+		cerrarConexion();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return coches;
 	}
 	
 	public int consultaIdMarca(String modelo){
@@ -136,7 +160,7 @@ public class GestorBBDDCoche extends GestorBBDD {
 		return id;
 	}
 	 public ArrayList<Coche> getCoches(String marca,Float consumo){
-		ArrayList<Coche> coches = new ArrayList();
+		coches = new ArrayList();
 		
 		try {
 			establecerConexion();
@@ -164,4 +188,37 @@ public class GestorBBDDCoche extends GestorBBDD {
 		return coches;
 	}
 
+
+
+	public int consultaConsumoMaximo() {
+		int consumoMaximo = 0;
+		try {
+			establecerConexion();
+			String sql="SELECT MAX(consumo) FROM modelos;";
+			Statement st = conexion.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			
+			while(rs.next()){
+				consumoMaximo = rs.getInt("max(consumo)");
+			}
+			cerrarConexion();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		
+		
+		return consumoMaximo;
+	}
+	public void borrarModelo(String modelo){
+		try {
+			establecerConexion();
+			String sql ="DELETE FROM modelos where lower(modelo) like \'"+modelo+"\';";
+			Statement st = conexion.createStatement();
+			st.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cerrarConexion();
+	}
 }

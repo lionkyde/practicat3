@@ -33,18 +33,26 @@ public class GestorCoches {
 		return coches;
 	}
 	public void addModelos(int id_marca,String modelo,float consumo,int emisiones,String clasificacion){
-		GestorBBDDCoche gestor = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
-		gestor.addModelo(id_marca, modelo, consumo, emisiones, clasificacion);
+		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
+		gc.addModelo(id_marca, modelo, consumo, emisiones, clasificacion);
 	}
 	public int consultaIdMarca(String modelo){
 		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
 		int resultado = gc.consultaIdMarca(modelo);
 		return resultado;
 	}
-	public ArrayList<Coche> consultaTodasMarcas(String todas){
+	public ArrayList<Coche> consultaTodasMarcas(Float consumo){
 		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
-		ArrayList<Coche> coches = gc.consultaTodasMarcas(todas);
+		ArrayList<Coche> coches = gc.consultaTodasMarcas(consumo);
 		return coches;
 	}
-	//TODO FALTA COGER LA INFORMACION DE TODAS LAS MARCAS PARA COMPARAR Y HACER CONSULTA DE TODAS LAS MARCAS Y MODELOS
+	public int consultaConsumoMaximo(){
+		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
+		int resultado = gc.consultaConsumoMaximo();
+		return resultado;
+	}
+	public void borrarModelo(String modelo){
+		gc = new GestorBBDDCoche("root","","localhost","bbdd_gestmotor");
+		gc.borrarModelo(modelo);
+	}
 }
