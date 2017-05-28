@@ -95,7 +95,7 @@ public class CrearBorrarMarca extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error de carga de drivers");
 						e1.printStackTrace();
 					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null,"Error en la base de datos");
+						JOptionPane.showMessageDialog(null,"Error en la base de datos 9");
 						e1.printStackTrace();
 					}
 						JOptionPane.showMessageDialog(null, "Añadido con éxito en la base de datos");
@@ -136,7 +136,7 @@ public class CrearBorrarMarca extends JPanel {
 					JOptionPane.showMessageDialog(null,"Error de carga de drivers");
 					e1.printStackTrace();
 				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null,"Error de la base de datos");
+					JOptionPane.showMessageDialog(null,"Error de la base de datos 10");
 					e1.printStackTrace();
 				}
 				TableModelMarcas tmm = new TableModelMarcas(marcas);
@@ -159,7 +159,7 @@ public class CrearBorrarMarca extends JPanel {
 					JOptionPane.showMessageDialog(null,"Error de carga de drivers");
 					e1.printStackTrace();
 				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null,"Error de la base de datos");
+					JOptionPane.showMessageDialog(null,"Error de la base de datos 11");
 					e1.printStackTrace();
 				}
 				
@@ -179,6 +179,7 @@ public class CrearBorrarMarca extends JPanel {
 					//SELECCION SI
 					int row = table.getSelectedRow();
 					String marcaSeleccionado=(String)table.getValueAt(row,0);
+					JOptionPane.showMessageDialog(null,"Borrado con exito");
 					System.out.println(marcaSeleccionado);
 					try {
 						gc.borrarMarca(marcaSeleccionado);
@@ -186,7 +187,7 @@ public class CrearBorrarMarca extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error de carga de drivers");
 						e1.printStackTrace();
 					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null,"Error en la base de datos");
+						JOptionPane.showMessageDialog(null,"Error, no puede borrar marca con datos ya almacenados,debe borrar los modelos para borrar la marca");
 						e1.printStackTrace();
 					}
 				}else{

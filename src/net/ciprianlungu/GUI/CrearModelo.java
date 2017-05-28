@@ -89,7 +89,6 @@ public class CrearModelo extends JPanel {
 			JOptionPane.showMessageDialog(null,"Error de carga de datos");
 			e.printStackTrace();
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Error de la base de datos 13");
 			e.printStackTrace();
 		}
 
@@ -151,7 +150,7 @@ public class CrearModelo extends JPanel {
 							JOptionPane.showMessageDialog(null,"Error de carga de datos");
 							e.printStackTrace();
 						} catch (SQLException e) {
-							JOptionPane.showMessageDialog(null,"Error de la base de datos");
+							JOptionPane.showMessageDialog(null,"Error de la base de datos 13");
 							e.printStackTrace();
 						} 
 						JOptionPane.showMessageDialog(null, "Añadido con éxito en la base de datos");

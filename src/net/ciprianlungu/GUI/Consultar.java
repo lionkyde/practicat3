@@ -85,7 +85,6 @@ public class Consultar extends JPanel {
 			JOptionPane.showMessageDialog(null,"Error del driver");
 			e1.printStackTrace();
 		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null,"Error en la base de datos");
 			e1.printStackTrace();
 		}
 		panel.add(comboBoxMarca);
@@ -104,7 +103,7 @@ public class Consultar extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error del driver");
 						e.printStackTrace();
 					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(null,"Error en la base datos");
+						JOptionPane.showMessageDialog(null,"Error en la base datos 2");
 						e.printStackTrace();
 					}
 					System.out.println("IMPRIMIENDO TODAS LAS MARCAS");
@@ -117,7 +116,7 @@ public class Consultar extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error del driver");
 						e.printStackTrace();
 					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(null,"Error de la base de datos");
+						JOptionPane.showMessageDialog(null,"Error de la base de datos 3");
 						e.printStackTrace();
 					}
 
@@ -159,7 +158,7 @@ public class Consultar extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error del driver");
 						e1.printStackTrace();
 					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null,"Error de la base de datos");
+						JOptionPane.showMessageDialog(null,"Error de la base de datos 4");
 						e1.printStackTrace();
 					}
 					System.out.println("IMPRIMIENDO TODAS LAS MARCAS");
@@ -172,7 +171,7 @@ public class Consultar extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error del driver");
 						e1.printStackTrace();
 					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null,"Error de la base de datos");
+						JOptionPane.showMessageDialog(null,"Error de la base de datos 5");
 						e1.printStackTrace();
 					}
 					
@@ -226,7 +225,7 @@ public class Consultar extends JPanel {
 					JOptionPane.showMessageDialog(null,"Error del driver");
 					e.printStackTrace();
 				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null,"Error de la base de datos");
+					JOptionPane.showMessageDialog(null,"Error de la base de datos 6");
 					e.printStackTrace();
 				}
 				
@@ -244,7 +243,6 @@ public class Consultar extends JPanel {
 			JOptionPane.showMessageDialog(null,"Error de driver");
 			e1.printStackTrace();
 		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null,"Error de la base de datos");
 			e1.printStackTrace();
 		}
 		sliderConsumo.setBounds(392, 23, 316, 41);
@@ -283,7 +281,7 @@ public class Consultar extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error de la carga de driver");
 						e.printStackTrace();
 					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(null,"Error de la base de datos");
+						JOptionPane.showMessageDialog(null,"Error de la base de datos 8");
 						e.printStackTrace();
 					}
 					System.out.println("BORRADO CON EXITO");
