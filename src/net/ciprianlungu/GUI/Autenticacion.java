@@ -14,6 +14,8 @@ import javax.swing.SwingUtilities;
 import net.ciprianlungu.persistencia.GestorBBDD;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -67,17 +69,14 @@ public class Autenticacion extends JPanel {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null,"Error de carga de driver");
 				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null,"Error a la base de datos1");
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,"Datos incorrectos");
+					System.exit(0);
 				}
-				
-				
-				removeAll();
+				removeAll();//BORRAR EL JPANEL DE AUTENTICACION
+				mostrarPortada(); //MOSTRAMOS LA PORTADA
 				JOptionPane.showMessageDialog(null,"Has entrado con éxito","Éxito",JOptionPane.WARNING_MESSAGE);
-
 			}
 		});
-		
 		
 		//TAMANO DE BOTON
 		btnEntrar.setBounds(359, 281, 91, 23);
@@ -89,10 +88,20 @@ public class Autenticacion extends JPanel {
 		passwordField.setBounds(351, 162, 128, 20);
 		add(passwordField);
 		
-		
+	
 	}
+	/**
+	 * Hacer la menuBar visible una vez entrado en sistema con su usuario y contrasenia
+	 */
 	private void setMenuBarVisible(){
 		Mainframe topFrame = (Mainframe)SwingUtilities.getWindowAncestor(this);
 		topFrame.setMenuBarVisible();
+	}
+	/**
+	 * Mostrador de portada
+	 */
+	private void mostrarPortada(){
+		Mainframe topFrame = (Mainframe)SwingUtilities.getWindowAncestor(this);
+		topFrame.mostrarPortada();
 	}
 }

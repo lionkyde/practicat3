@@ -62,8 +62,8 @@ public class CrearBorrarMarca extends JPanel {
 		
 		//CREACION DEL PANEL.
 		JPanel panel = new JPanel();
-		panel.setBackground(new java.awt.Color(0, 204, 204));
-		panel.setForeground(new java.awt.Color(51, 204, 204));
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setForeground(Color.LIGHT_GRAY);
 		panel.setBounds(0, 0, 800, 600);
 		add(panel,BorderLayout.CENTER);
 		panel.setLayout(null);
@@ -84,10 +84,29 @@ public class CrearBorrarMarca extends JPanel {
 				int dialogResultado = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres guardar en la base de datos?",
 						"Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if(dialogResultado == JOptionPane.YES_OPTION){
+					//OPCION SI
 					System.out.println("Ejecutado guardar boton");
 					String marca = tfMarca.getText();
-					
-					//gc.addMarcas(marca);
+					if(marca != null && !marca.isEmpty()){
+						//No esta vacio
+						try {
+						gc.addMarcas(marca);
+					} catch (ClassNotFoundException e1) {
+						JOptionPane.showMessageDialog(null,"Error de carga de drivers");
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null,"Error en la base de datos");
+						e1.printStackTrace();
+					}
+						JOptionPane.showMessageDialog(null, "Añadido con éxito en la base de datos");
+					}else{
+						//esta vacio el string
+						JOptionPane.showMessageDialog(null, "No puede haber campo vacio");
+					}
+
+				}else{
+					//OPCION NO
+					System.out.println("He salido");
 				}
 			}
 		});
@@ -95,16 +114,16 @@ public class CrearBorrarMarca extends JPanel {
 		btnGuardar.setIcon(new ImageIcon(CrearModelo.class.getResource("/assets/guardar.png")));
 		toolbar.add(btnGuardar);
 		
-		//LIMPIAR
+		//LIMPIAR 
 		JButton btnLimpiar = new JButton("Limpiar");
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//VACIAMOS LOS TEXTFIELD CON CADENA VACIA
 				tfMarca.setText("");
 			}
 		});
 		btnLimpiar.setBackground(Color.WHITE);
 		btnLimpiar.setIcon(new ImageIcon(CrearModelo.class.getResource("/assets/limpiar.png")));
-		
 		toolbar.add(btnLimpiar);
 		
 		//BUSCAR
@@ -117,10 +136,9 @@ public class CrearBorrarMarca extends JPanel {
 					JOptionPane.showMessageDialog(null,"Error de carga de drivers");
 					e1.printStackTrace();
 				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null,"Error de la base de datos 10");
+					JOptionPane.showMessageDialog(null,"Error de la base de datos");
 					e1.printStackTrace();
 				}
-				
 				TableModelMarcas tmm = new TableModelMarcas(marcas);
 				table.setModel(new TableModelMarcas(marcas));
 			}
@@ -141,7 +159,7 @@ public class CrearBorrarMarca extends JPanel {
 					JOptionPane.showMessageDialog(null,"Error de carga de drivers");
 					e1.printStackTrace();
 				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null,"Error de la base de datos 11");
+					JOptionPane.showMessageDialog(null,"Error de la base de datos");
 					e1.printStackTrace();
 				}
 				
@@ -153,17 +171,42 @@ public class CrearBorrarMarca extends JPanel {
 		
 		//BORRAR
 		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int dialogResultado = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrar?",
+						"Confirmacion de borrado",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+				if(dialogResultado == JOptionPane.YES_OPTION){
+					//SELECCION SI
+					int row = table.getSelectedRow();
+					String marcaSeleccionado=(String)table.getValueAt(row,0);
+					System.out.println(marcaSeleccionado);
+					try {
+						gc.borrarMarca(marcaSeleccionado);
+					} catch (ClassNotFoundException e1) {
+						JOptionPane.showMessageDialog(null,"Error de carga de drivers");
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null,"Error en la base de datos");
+						e1.printStackTrace();
+					}
+				}else{
+					//SELECCION NO
+					System.out.println("He salido");
+				}
+			}
+		});
 		btnBorrar.setBackground(Color.WHITE);
 		btnBorrar.setIcon(new ImageIcon(Consultar.class.getResource("/assets/borrar1.png")));
 		toolbar.add(btnBorrar);
 		
 
-		
+		//LABEL TEXTO ANADIR MARCA
 		JLabel lblAddMarca = new JLabel("A\u00F1adir marca");
 		lblAddMarca.setFont(new Font("Traditional Arabic", Font.BOLD, 18));
 		lblAddMarca.setBounds(117, 82, 145, 38);
 		panel.add(lblAddMarca);
 		
+		//LABEL TEXTO CONSULTA TODAS LAS MARCAS
 		JLabel lblConsultarMarcas = new JLabel("Todas las marcas");
 		lblConsultarMarcas.setFont(new Font("Traditional Arabic", Font.BOLD, 18));
 		lblConsultarMarcas.setBounds(530, 12, 164, 14);
@@ -189,7 +232,5 @@ public class CrearBorrarMarca extends JPanel {
 		tfMarca.setBounds(87, 149, 175, 20);
 		panel.add(tfMarca);
 		tfMarca.setColumns(10);
-
-		
 	}
 }

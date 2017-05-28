@@ -51,12 +51,13 @@ public class Consultar extends JPanel {
 	JComboBox comboBoxMarca = new JComboBox();
 	JButton btnBorrar = new JButton("");
 	ArrayList<Coche> coches;
+	private String todasMarcas="Todas las marcas";
+	ArrayList<Marca> marcas;
 	/**
 	 * Create the panel.
 	 */
 	public Consultar() {
 		GestorCoches gc = new GestorCoches();
-		
 		
 		setBackground(SystemColor.info);
 		setLayout(new BorderLayout(0, 0));
@@ -72,11 +73,9 @@ public class Consultar extends JPanel {
 		panel.setLayout(null);
 		
 		//COMBOBOX DE MARCAS
-		ArrayList<Marca> marcas;
-		String todasMarcas="Todas las marcas";
+		
 		try {
 			marcas = gc.getMarcas();
-			
 			comboBoxMarca.setBounds(74, 23, 201, 20);
 			comboBoxMarca.addItem(todasMarcas);
 			for(Marca marcaa : marcas){
@@ -86,40 +85,39 @@ public class Consultar extends JPanel {
 			JOptionPane.showMessageDialog(null,"Error del driver");
 			e1.printStackTrace();
 		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null,"Error en la base de datos 2");
+			JOptionPane.showMessageDialog(null,"Error en la base de datos");
 			e1.printStackTrace();
 		}
 		panel.add(comboBoxMarca);
 		
 		//BOTON DE CONSULTAR
-		
-		
 		JButton btnConsultar = new JButton("");
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String marca=(String)comboBoxMarca.getSelectedItem(); //el item de comboMarca seleccionado
 				float consumoParseado= (float)sliderConsumo.getValue(); //valor del slider pasamos al float
 				if(todasMarcas.equals(marca)){
+					//COMBOBOX ES IGUAL AL TODAS LAS MARCAS
 					try {
 						coches = gc.consultaTodasMarcas(consumoParseado);
 					} catch (ClassNotFoundException e) {
 						JOptionPane.showMessageDialog(null,"Error del driver");
 						e.printStackTrace();
 					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(null,"Error de base de datos 3");
+						JOptionPane.showMessageDialog(null,"Error en la base datos");
 						e.printStackTrace();
 					}
 					System.out.println("IMPRIMIENDO TODAS LAS MARCAS");
 				}else{
+					//COMBOBOX POR MARCA
 					System.out.println("Imprimiendo por marca");
-					
 					try {
 						coches = gc.consultaMarcaConsumoCoches(marca,consumoParseado);
 					} catch (ClassNotFoundException e) {
 						JOptionPane.showMessageDialog(null,"Error del driver");
 						e.printStackTrace();
 					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(null,"Error de la base de datos 4");
+						JOptionPane.showMessageDialog(null,"Error de la base de datos");
 						e.printStackTrace();
 					}
 
@@ -135,6 +133,23 @@ public class Consultar extends JPanel {
 		JButton btnRecargar = new JButton("");
 		btnRecargar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//REACTUALIZACION DEL COMBO DE MARCAS
+				comboBoxMarca.removeAllItems();
+				marcas.clear();
+				try{
+					marcas = gc.getMarcas();
+					comboBoxMarca.setBounds(74, 23, 201, 20);
+					comboBoxMarca.addItem(todasMarcas);
+					for(Marca marcaa : marcas){
+						comboBoxMarca.addItem(marcaa.getMarca());
+					}
+				}catch(SQLException e2){
+					
+				}catch(ClassNotFoundException e2){
+					
+				}
+
+				
 				String marca=(String)comboBoxMarca.getSelectedItem(); //el item de comboMarca seleccionado
 				float consumoParseado= (float)sliderConsumo.getValue(); //valor del slider pasamos al float
 				if(todasMarcas.equals(marca)){
@@ -144,7 +159,7 @@ public class Consultar extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error del driver");
 						e1.printStackTrace();
 					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null,"Error de la base de datos 5");
+						JOptionPane.showMessageDialog(null,"Error de la base de datos");
 						e1.printStackTrace();
 					}
 					System.out.println("IMPRIMIENDO TODAS LAS MARCAS");
@@ -157,7 +172,7 @@ public class Consultar extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error del driver");
 						e1.printStackTrace();
 					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null,"Error de la base de datos 6");
+						JOptionPane.showMessageDialog(null,"Error de la base de datos");
 						e1.printStackTrace();
 					}
 					
@@ -183,26 +198,27 @@ public class Consultar extends JPanel {
 		panel.add(lblNewLabel);
 		
 
-		
+		//LABEL TEXTO CONSUMO
 		JLabel lblMostradoConsumo = new JLabel();
-		lblMostradoConsumo.setBounds(588, 0, 36, 20);
+		lblMostradoConsumo.setBounds(588, 0, 95, 20);
 		panel.add(lblMostradoConsumo);
 		
+		//LABEL CONSUMO MINIMO
 		JLabel lblConsumoMin = new JLabel("0");
 		lblConsumoMin.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblConsumoMin.setBounds(371, 24, 11, 22);
 		panel.add(lblConsumoMin);
 		
+		//LABEL CONSUMO MAXIMO
 		JLabel lblConsumoMaximo = new JLabel();
-
 		lblConsumoMaximo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblConsumoMaximo.setBounds(718, 23, 59, 29);
 		panel.add(lblConsumoMaximo);
-		sliderConsumo.setMaximum(1000);
+		sliderConsumo.setMaximum(1000);//TAMANIO MAXIMO DEL SLIDER
 		//CADA VEZ QUE EL ESTADO DE SLIDER CAMBIA, CAMBIA EL TEXTO DE JLABEL.
 		sliderConsumo.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
-				lblMostradoConsumo.setText(Integer.toString(sliderConsumo.getValue()));
+				lblMostradoConsumo.setText(Integer.toString(sliderConsumo.getValue())+"L/100km");
 				try {
 					lblConsumoMaximo.setText(Float.toString(gc.consultaConsumoMaximo()));
 					sliderConsumo.setMaximum(gc.consultaConsumoMaximo());
@@ -210,7 +226,7 @@ public class Consultar extends JPanel {
 					JOptionPane.showMessageDialog(null,"Error del driver");
 					e.printStackTrace();
 				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null,"Error de la base de datos 7");
+					JOptionPane.showMessageDialog(null,"Error de la base de datos");
 					e.printStackTrace();
 				}
 				
@@ -218,7 +234,6 @@ public class Consultar extends JPanel {
 		});
 		
 		//SLIDER DE CONSUMO MAXIMO
-		
 		sliderConsumo.setMajorTickSpacing(2);
 		sliderConsumo.setToolTipText("");	
 		sliderConsumo.setMinorTickSpacing(2);
@@ -229,13 +244,10 @@ public class Consultar extends JPanel {
 			JOptionPane.showMessageDialog(null,"Error de driver");
 			e1.printStackTrace();
 		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null,"Error de la base de datos 8");
+			JOptionPane.showMessageDialog(null,"Error de la base de datos");
 			e1.printStackTrace();
 		}
-		
-
 		sliderConsumo.setBounds(392, 23, 316, 41);
-		
 		panel.add(sliderConsumo);
 		
 		//SCROLLPANE CON JTABLE
@@ -243,27 +255,25 @@ public class Consultar extends JPanel {
 		scrollPane.setBounds(0, 72, 777, 410);
 		panel.add(scrollPane);
 		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(table);
-		
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//METODO DE UNICA SELECCION
+		scrollPane.setViewportView(table);//HACER VISIBLE LA TABLE DENTRO DEL SCROLLPANE
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 			@Override
 			public void valueChanged(ListSelectionEvent lse) {
-				if(lse.getValueIsAdjusting()){ //sin este metodo, el ListSelectionEvent invoca dos veces los metodos de abajo
-				
-
-
-				}
 				toolBar.add(btnBorrar);
 				btnBorrar.setIcon(new ImageIcon(Consultar.class.getResource("/assets/delete.png")));	
 			}
 		});
-		System.out.println("Entrando");
+		table.setBackground(Color.YELLOW);
+		table.setBounds(10, 73, 780, 457);
+		
+		//BOTON BORRAR
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int dialogResultado = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrar?",
 						"Confirmacion de borrado",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 				if(dialogResultado == JOptionPane.YES_OPTION){
+					//OPCION SI
 					int row = table.getSelectedRow();
 					String modeloSeleccionado=(String)table.getValueAt(row,1); //FILA Y COLUMNA(AMBOS CUENTAN DESDE 0,1,2,3..)
 					System.out.println(modeloSeleccionado);
@@ -273,20 +283,15 @@ public class Consultar extends JPanel {
 						JOptionPane.showMessageDialog(null,"Error de la carga de driver");
 						e.printStackTrace();
 					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(null,"Error de la base de datos 9");
+						JOptionPane.showMessageDialog(null,"Error de la base de datos");
 						e.printStackTrace();
 					}
 					System.out.println("BORRADO CON EXITO");
 				}else{
+					//OPCION NO
 					System.out.println("He salido");
 				}
 			}
 		});
-		
-		
-		table.setBackground(Color.YELLOW);
-		table.setBounds(10, 73, 780, 457);
-		
-		
 	}
 }

@@ -9,6 +9,10 @@ public class TableModelModelos implements TableModel {
 
 	ArrayList<Coche> coches;
 	
+	/**
+	 * Constructor de table model de coches
+	 * @param coches pasar el arraylist de coches
+	 */
 	public TableModelModelos(ArrayList<Coche> coches){
 		this.coches=coches;
 	}

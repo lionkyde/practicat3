@@ -7,7 +7,14 @@ public class Modelo {
 	private int emisiones;
 	private String clasificacion;
 	
-	
+	/**
+	 * Constructor de modelo de coche
+	 * @param id_marca id de marca
+	 * @param modelo nombre de modelo del coche
+	 * @param consumo consumo maximo del coche
+	 * @param emisiones emisiones expresada en gramos
+	 * @param clasificacion clasificacion de eficiencia
+	 */
 	public Modelo(int id_marca, String modelo, float consumo, int emisiones, String clasificacion) {
 		super();
 		this.id_marca = id_marca;

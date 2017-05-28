@@ -28,7 +28,11 @@ public class Mainframe extends JFrame {
 
 	private JPanel contentPane;
 	JMenuBar menuBar = new JMenuBar();
-	
+	Autenticacion autenticacion;
+	CrearModelo crearModelo;
+	Consultar consulta;
+	CrearBorrarMarca crearMarca;
+	Portada portada;
 
 	/**
 	 * Launch the application.
@@ -50,7 +54,8 @@ public class Mainframe extends JFrame {
 	 * Create the frame.
 	 */
 	public Mainframe() {
-		
+		//Imagen icono del software
+		setIconImage(new ImageIcon(Portada.class.getResource("/assets/icon.png")).getImage());
 		//JFRAME
 		setResizable(false);
 		setBackground(Color.GREEN);
@@ -78,6 +83,7 @@ public class Mainframe extends JFrame {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
+		//JMENU SALIR
 		JMenuItem mntmExit = new JMenuItem("Salir");
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -86,10 +92,11 @@ public class Mainframe extends JFrame {
 		});
 		mnFile.add(mntmExit);
 		
+		//JMENU PANEL
 		JMenu mnPanel = new JMenu("Panel");
 		menuBar.add(mnPanel);
 
-		
+		//JMENU CONSULTAR
 		JMenuItem mntmPanel_1 = new JMenuItem("Consultar");
 		mntmPanel_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,6 +106,7 @@ public class Mainframe extends JFrame {
 		});
 		mnPanel.add(mntmPanel_1);
 		
+		//JMENU CREAR MODELOS
 		JMenuItem mntmPanel_2 = new JMenuItem("Crear Modelos");
 		mntmPanel_2.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -108,6 +116,7 @@ public class Mainframe extends JFrame {
 		});
 		mnPanel.add(mntmPanel_2);
 		
+		//JMENU CREAR/BORRAR MARCAS
 		JMenuItem mntmPanel_3 = new JMenuItem("Crear/Borrar Marcas");
 		mntmPanel_3.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -134,28 +143,62 @@ public class Mainframe extends JFrame {
 		});
 		mnHelp.add(mntmAbout);
 		
-		
+		//PANEL
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
 		
-		Autenticacion autenticacion = new Autenticacion();
-		CrearModelo crearModelo = new CrearModelo();
-		Consultar consulta = new Consultar();
-		CrearBorrarMarca crearMarca = new CrearBorrarMarca();
+		
+		autenticacion = new Autenticacion();
+		crearModelo = new CrearModelo();
+		consulta = new Consultar();
+		crearMarca = new CrearBorrarMarca();
+		portada = new Portada();
 		
 		contentPane.add(autenticacion,"Principal");
 		contentPane.add(crearModelo,"CrearModelo");
 		contentPane.add(consulta,"Consultar");
 		contentPane.add(crearMarca,"CrearBorrarMarca");
+		contentPane.add(portada,"Portada");
 	}
-	
+	/**
+	 * Hacer visible el menuBar, por defecto viene escondido.
+	 * Se utiliza para aparecer despues de autentificarse
+	 */
 	public void setMenuBarVisible(){
 		menuBar.setVisible(true);
 		invalidate();
 		validate();
 		repaint();
 	}
-	
+	/**
+	 * Mostrador de portada
+	 */
+	public void mostrarPortada(){
+		//TODO AQUI CREAREMOS PARA IR A PORTADA
+		CardLayout cl = (CardLayout)contentPane.getLayout();
+		cl.show(contentPane,"Portada");
+	}
+	/**
+	 * Mostrador de consulta Marca
+	 */
+	public void mostrarConsultaMarca(){
+		CardLayout c2 = (CardLayout)contentPane.getLayout();
+		c2.show(contentPane,"CrearBorrarMarca");
+	}
+	/**
+	 * Mostrador de consulta de modelo
+	 */
+	public void mostrarConsultaModelo(){
+		CardLayout c3 = (CardLayout)contentPane.getLayout();
+		c3.show(contentPane,"Consultar");
+	}
+	/**
+	 * Mostrador de crear modelo
+	 */
+	public void mostrarCrearModelo(){
+		CardLayout c4 = (CardLayout)contentPane.getLayout();
+		c4.show(contentPane,"CrearModelo");
+	}
 }

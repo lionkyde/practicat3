@@ -8,6 +8,10 @@ import javax.swing.table.TableModel;
 public class TableModelMarcas implements TableModel {
 	
 	ArrayList<Marca> marcas;
+	/**
+	 * Constructor de table model de marcas
+	 * @param marcas pasamos al parametro un arraylist de coches
+	 */
 	public TableModelMarcas(ArrayList<Marca> marcas){
 		this.marcas=marcas;
 	}
@@ -29,7 +33,7 @@ public class TableModelMarcas implements TableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 1;
+		return 1; //solo hay una columna, el de marca
 	}
 
 	@Override
@@ -44,7 +48,7 @@ public class TableModelMarcas implements TableModel {
 
 	@Override
 	public int getRowCount() {
-		return marcas.size();
+		return marcas.size(); //tamanio total de marcas
 	}
 
 	@Override

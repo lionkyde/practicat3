@@ -4,7 +4,11 @@ public class Marca {
 	private int id;
 	private String marca;
 	
-	
+	/**
+	 * Constructor de marca
+	 * @param id id de marca
+	 * @param marca nombre de marca
+	 */
 	public Marca(int id, String marca) {
 		super();
 		this.id = id;
